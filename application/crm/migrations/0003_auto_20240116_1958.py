@@ -26,4 +26,6 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
+        migrations.RunPython(create_custom_group_and_permissions),
+
     ]
