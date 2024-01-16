@@ -24,7 +24,7 @@ def create_custom_group_and_permissions(apps, schema_editor):
     admin_permissions = Permission.objects.filter(content_type__app_label='admin')
     for permission in admin_permissions:
         custom_group.permissions.add(permission)
-
+    custom_group.save()
 class Migration(migrations.Migration):
 
     dependencies = [
