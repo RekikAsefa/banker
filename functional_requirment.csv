@@ -1,0 +1,11 @@
+requirement
+as a bussiness customer i want to be able to login using my username and password
+as a bussiness customer i want to be able to ask question from the support staff
+as a bussiness customer i want to be able to read the answers of my question from the support staff
+as a bussiness customer i want to be able to insert my personal and bussiness information using a web form
+as a bussiness customer i want to be able to check the status of my application
+as a customer relation agent i want to be able to get the all the customers who have inserted there data on the onboarding webform
+as a customer relation agent i want to be able to see all the customers information
+as a customer relation agent i want to be able to update the status of the customers application
+as a customer relation agent i want to be able to read messages from the bussiness customer
+as a customer relation agent i want to be able to answer to messages from the bussiness customer
