@@ -1,0 +1,163 @@
+<!-- chat.html -->
+<script>
+  console.log("Dont copy paste anything in this console");
+</script>
+
+<style>
+  .pulsate {
+    animation: pulsate 1s infinite;
+  }
+
+  @keyframes pulsate {
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.03);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+</style>
+<div id="chat-widget">
+  <div id="chat-icon" onclick="initiateChat()" class="btn btn-primary pulsate">
+    &#x1F4AC; Chat
+  </div>
+  <div id="chat-window" style="display: none" class="card">
+    <div id="chat-header" class="card-header">
+      <span onclick="closeChat()" class="close-btn">&#x2716;</span>
+      Chat Session <span id="chat-session-id">{{ chat_session_id }}</span>
+    </div>
+    <div id="chat-messages" class="card-body">
+      {% for message in chat_messages %}
+      <div
+        class="message {% if message.user == request.user.username %}sent{% else %}received{% endif %}"
+      >
+        <strong>{{ message.user }}:</strong> {{ message.content }}
+      </div>
+      {% endfor %}
+    </div>
+    <textarea
+      id="chat-input"
+      class="form-control"
+      placeholder="Type your message..."
+    ></textarea>
+    <button onclick="sendMessage()" class="btn btn-primary mt-2">Send</button>
+  </div>
+</div>
+
+<script>
+  function initiateChat() {
+    document
+      .getElementById("chat-icon")
+      .setAttribute("style", "btn btn-primary");
+    fetch("/chat/initiate/")
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.status === "success") {
+          // Store the chat session ID in local storage
+          localStorage.setItem("chatSessionId", data.chat_session_id);
+          // Update the chat session ID in the UI
+          //   document.getElementById("chat-session-id").innerText =
+          //     data.chat_session_id;
+          // Show the chat window
+          const chatWindow = document.getElementById("chat-window");
+          chatWindow.style.display = "block";
+          // Start polling messages
+          pollMessages();
+        } else {
+          console.error("Failed to initiate chat");
+        }
+      })
+      .catch((error) => console.error("Error initiating chat:", error));
+  }
+
+  function closeChat() {
+    // Hide the chat window
+    const chatWindow = document.getElementById("chat-window");
+    chatWindow.style.display = "none";
+    // Clear the chat session ID from local storage
+    localStorage.removeItem("chatSessionId");
+  }
+
+  function sendMessage() {
+    const inputElement = document.getElementById("chat-input");
+    const messageContent = inputElement.value.trim();
+
+    if (messageContent !== "") {
+      // Get the chat session ID from local storage
+      const chatSessionId = localStorage.getItem("chatSessionId");
+
+      console.log(JSON.stringify({ content: messageContent }));
+      console.log(chatSessionId);
+      fetch(`/chat/api/send/${chatSessionId}/`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "X-CSRFToken": getCookie("csrftoken"),
+        },
+        body: JSON.stringify({ content: messageContent }),
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
+          }
+          inputElement.value = "";
+        })
+        .catch((error) => console.error("Error sending message:", error));
+    }
+  }
+
+  function pollMessages() {
+    // Get the chat session ID from local storage
+    const chatSessionId = localStorage.getItem("chatSessionId");
+
+    fetch(`/chat/api/messages/${chatSessionId}/`)
+      .then((response) => response.json())
+      .then((data) => {
+        const chatMessagesDiv = document.getElementById("chat-messages");
+        chatMessagesDiv.innerHTML = "";
+        data.forEach((message) => {
+          const messageDiv = document.createElement("div");
+          messageDiv.className = `message ${
+            message.user === "{{ request.user.username }}" ? "sent" : "received"
+          }`;
+
+          messageDiv.innerHTML = `<strong>${message.user}:</strong> ${message.content}`;
+          chatMessagesDiv.appendChild(messageDiv);
+        });
+      })
+      .catch((error) => console.error("Error polling messages:", error))
+      .finally(() => setTimeout(pollMessages, 2000));
+  }
+
+  window.onload = function () {
+    // Check if a chat session ID is already stored in local storage
+    const chatSessionId = localStorage.getItem("chatSessionId");
+    if (chatSessionId) {
+      // Update the chat session ID in the UI
+      document.getElementById("chat-session-id").innerText = chatSessionId;
+      // Show the chat window
+      const chatWindow = document.getElementById("chat-window");
+      chatWindow.style.display = "block";
+      // Start polling messages
+      pollMessages();
+    }
+  };
+
+  function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== "") {
+      const cookies = document.cookie.split(";");
+      for (let i = 0; i < cookies.length; i++) {
+        const cookie = cookies[i].trim();
+        if (cookie.substring(0, name.length + 1) === name + "=") {
+          cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+          break;
+        }
+      }
+    }
+    return cookieValue;
+  }
+</script>

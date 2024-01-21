@@ -1,0 +1,20 @@
+User profiles:-
+
+1.Business Customers:
+
+Individuals within the business customer's organization who need access to SWIFT transfer services.
+May have varying levels of permissions and roles based on their responsibilities.
+
+
+2.Customer Service Representatives:
+
+Employees responsible for processing SWIFT transfer requests within the CRM module.
+Handle request validations, approvals, and address customer queries.
+Interact with both the web module and CRM for request processing.
+
+
+3.CRM Administrators:
+
+- Create customer server representatives users with approprate permissions
+- Manage and configure settings within the CRM module.
+- Ensure the CRM is aligned with the business requirements and integrates seamlessly with the web module.

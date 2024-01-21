@@ -1,0 +1,36 @@
+<!-- templates/navbar.html -->
+<script>
+  console.log("Dont copy paste anything in this console");
+</script>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-orange">
+  <div class="container">
+    <!-- Company Name -->
+    <a class="navbar-brand" href="{% url 'your_app:home' %}">Your Company</a>
+
+    <!-- Navbar Toggler and Collapsible Content -->
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-toggle="collapse"
+      data-target="#navbarNav"
+      aria-controls="navbarNav"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <!-- Navbar Items -->
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'your_app:login' %}">Login</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'your_app:signup' %}">Sign Up</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

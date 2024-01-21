@@ -1,0 +1,68 @@
+<!-- login.html -->
+{% extends 'base.html' %} {% block content %} {% load static %}
+<script>
+  console.log("Dont copy paste anything in this console");
+</script>
+
+<style>
+  .img-cont {
+    /* height: 100px; */
+    /* width: 100px; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .img {
+    height: 60px;
+    width: 60px;
+    border-radius: 100px;
+  }
+</style>
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-4 border p-4">
+      <div class="img-cont p-2">
+        <img
+          src="{% static 'black_people_laughin.jpeg' %}"
+          class="img"
+          alt="Your Image"
+        />
+      </div>
+      <h2 class="mb-4">Login</h2>
+      {% if form.errors %}
+      <div class="alert alert-danger" role="alert">
+        {% for field, errors in form.errors.items %}
+        <strong>{{ field|title }}:</strong> {{ errors.0 }}<br />
+        {% endfor %}
+      </div>
+      {% endif %} {% if message %}
+      <div class="alert alert-danger" role="alert">
+        <span>{{ message }}</span>
+      </div>
+      {% endif %}
+      <form method="post" action="" class="needs-validation" novalidate>
+        {% csrf_token %}
+        <div class="">
+          <div class="form-group form-group-cont">
+            <label for="{{ form.email.id_for_label }}" class="input-label"
+              >Email</label
+            >
+            {{ form.email }}
+          </div>
+          <div class="form-group form-group-cont">
+            <label for="{{ form.password.id_for_label }}" class="input-label"
+              >Password</label
+            >
+            {{ form.password }}
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">Login</button>
+      </form>
+      <p class="mt-3 text-center">
+        Don't have an account?
+        <a href="{% url 'create_business_customer' %}">Create an account</a>.
+      </p>
+    </div>
+  </div>
+</div>
+{% endblock %}

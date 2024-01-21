@@ -1,0 +1,156 @@
+<!-- templates/navbar.html -->
+{% extends 'base.html' %} {% block content %} {% load static %}
+<script>
+  console.log("Dont copy paste anything in this console");
+</script>
+
+<style>
+  .img {
+    height: 100%;
+    width: 100%;
+  }
+  .starter_btn {
+    border: 1px solid white;
+    padding: 10px;
+    border-radius: 10px;
+  }
+  .brand {
+    font-weight: bold;
+    color: black;
+  }
+  .landing {
+    background-image: url("{% static 'landing.webp' %}");
+    background-size: cover;
+    height: 85vh;
+    /* display: flex;
+    align-items: center;
+    justify-content: flex-start; */
+  }
+
+  .landing_text_content {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+  }
+  .chat {
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+  }
+</style>
+<nav class="navbar navbar-expand-lg navbar-light">
+  <div class="container">
+    <a class="navbar-brand brand" href="{% url 'landing' %}">Haron</a>
+
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-toggle="collapse"
+      data-target="#navbarNav"
+      aria-controls="navbarNav"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <!-- Navbar Items -->
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'login' %}">Login</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'create_business_customer' %}"
+            >Sign Up</a
+          >
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<div class="container">
+  <div class="row landing">
+    <!-- Text Content -->
+
+    <div class="col-md-6 landing_text_content">
+      <div class="my-5 mx-md-5 text-white">
+        <h1>A portal that makes your life easier</h1>
+        <p class="lead">
+          This portal streamlines our onboarding process into our system so you
+          can focus on your bussiness needs and we can handle the heavy lifting
+          for you.
+        </p>
+        <a class="btn-primary starter_btn" href="{% url 'login' %}"
+          >Get Started</a
+        >
+      </div>
+    </div>
+    <div class="col-md-6 chat">{% include 'chat.html' %}</div>
+  </div>
+</div>
+<!-- <div class="container mt-5">
+  <div class="row">
+    <div class="col-md-6">
+      <img
+        src="{% static 'black_people_laughin.jpeg' %}"
+        class="img"
+        alt="Your Image"
+      />
+    </div>
+    <div class="col-md-12 text-center">
+      <div class="my-5 mx-md-5">
+        <h1>Chat with us</h1>
+        <p class="lead">
+          We have a dedicated customer relations team that is dying to hear from
+          you. Dont hesitate to ask questions because we wont hesitate to
+          answer.
+        </p>
+        <a
+          class="btn-primary starter_btn"
+          href="{% url 'create_business_customer' %}"
+          >Chat with us</a
+        >
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container mt-5">
+  <div class="row">
+  
+    <div class="col-12 text-center">
+      <h4>Services</h4>
+    </div>
+    <div class="col-md-4">
+      <div class="my-5 mx-md-5">
+        <h1>A portal that makes your life easier</h1>
+        <p class="lead">
+          This portal streamlines our onboarding process into our system so you
+          can focus on your bussiness needs and we can handle the heavy lifting
+          for you.
+        </p>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="my-5 mx-md-5">
+        <h1>A portal that makes your life easier</h1>
+        <p class="lead">
+          This portal streamlines our onboarding process into our system so you
+          can focus on your bussiness needs and we can handle the heavy lifting
+          for you.
+        </p>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="my-5 mx-md-5">
+        <h1>A portal that makes your life easier</h1>
+        <p class="lead">
+          This portal streamlines our onboarding process into our system so you
+          can focus on your bussiness needs and we can handle the heavy lifting
+          for you.
+        </p>
+      </div>
+    </div>
+  </div>
+</div> -->
+{% endblock %}
